@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind_map/feature/profile/presentation/pages/knowledge_graph_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,19 +15,19 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Профиль пользователя'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 50,
                 backgroundImage: NetworkImage(
                     'https://example.com/avatar.jpg'), // URL аватара
               ),
-              const SizedBox(height: 16),
-              const Text(
+              SizedBox(height: 16),
+              Text(
                 'ИМЯ ФАМИЛИЯ',
                 style: TextStyle(
                   color: Color(0xFF06146C),
@@ -34,29 +35,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               AboutWidget(),
-              const SizedBox(height: 16),
-              const TagItemsListWidget(),
-              const SizedBox(height: 16),
-              const Text(
-                'КАРТА ЗНАНИЙ:',
-                style: TextStyle(
-                  color: Color(0xFF06146C),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: 200,
-                height: 200,
-                child: Container(
-                  color: Colors.grey[200],
-                  // Здесь вы можете добавить ваш GraphView.
-                  child: const Center(child: Text('Здесь будет график знаний')),
-                ),
-              ),
+              SizedBox(height: 16),
+              TagItemsListWidget(),
             ],
           ),
         ),
@@ -84,17 +66,36 @@ class TagItemsListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
-          'ТЕГИ:',
-          style: TextStyle(
-            color: Color(0xFF06146C),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'ТЕГИ:',
+              style: TextStyle(
+                color: Color(0xFF06146C),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const KnowledgeGraphScreen()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    const Icon(Icons.map),
+                    const Text("Карта знаний"),
+                  ],
+                )),
+          ],
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 150,
+          height: 300,
           child: Scrollbar(
             radius: const Radius.circular(5),
             interactive: true,
@@ -115,14 +116,14 @@ class TagItemsListWidget extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         ElevatedButton(
-          style: ButtonStyle(
+          style: const ButtonStyle(
             backgroundColor: WidgetStatePropertyAll(Color(0xFF7D83FF)),
             foregroundColor: WidgetStatePropertyAll(Colors.white),
           ),
           onPressed: () {
             // Логика для добавления тега
           },
-          child: Text('ДОБАВИТЬ'),
+          child: const Text('ДОБАВИТЬ'),
         )
       ],
     );
@@ -204,7 +205,7 @@ class TagItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
-              color: Color.fromARGB(33, 125, 131, 255),
+              color: const Color.fromARGB(33, 125, 131, 255),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -217,7 +218,7 @@ class TagItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: Color(0xFFBCFF95),
+            color: const Color(0xFFBCFF95),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(

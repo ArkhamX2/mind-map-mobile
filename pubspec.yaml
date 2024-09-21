@@ -22,6 +22,8 @@ dependencies:
   http: ^1.2.2
   hive_flutter: ^1.1.0
   flutter_native_splash: ^2.4.1
+  flutter_graph_view: ^1.1.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
