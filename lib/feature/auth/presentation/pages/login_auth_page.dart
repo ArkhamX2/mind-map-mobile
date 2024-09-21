@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mind_map/core/presentation/UI/garden_loading_widget.dart';
+import 'package:mind_map/core/presentation/UI/mind_loading_widget.dart';
 import 'package:mind_map/core/presentation/button_widget.dart';
-import 'package:mind_map/core/presentation/garden_input_text_field_style.dart';
-import 'package:mind_map/core/presentation/label/garden_default_label_widget.dart';
+import 'package:mind_map/core/presentation/mind_input_text_field_style.dart';
+import 'package:mind_map/core/presentation/label/mind_default_label_widget.dart';
 import 'package:mind_map/core/utils/email_validator.dart';
 import 'package:mind_map/feature/auth/data/models/security_request_model.dart';
 import 'package:mind_map/feature/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -51,7 +51,7 @@ class _LoginAuthPageState extends State<LoginAuthPage> {
             return Container(); // Return an empty container to avoid return null.
           },
           authLoading: () => const Center(
-            child: GardenLoadingWidget(),
+            child: MindLoadingWidget(),
           ),
           authFail: (message) => _FormWidget(
             formKey: formKey,
@@ -83,7 +83,7 @@ class _FormWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const GardenDefaultLabelWidget(
+          const MindDefaultLabelWidget(
             text: "Еmail:",
             fontSize: 20,
           ),
@@ -94,7 +94,7 @@ class _FormWidget extends StatelessWidget {
           const SizedBox(
             height: 23,
           ),
-          const GardenDefaultLabelWidget(
+          const MindDefaultLabelWidget(
             text: "Пароль:",
             fontSize: 20,
           ),
@@ -167,7 +167,7 @@ class _EmailFieldWidgetState extends State<_EmailFieldWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      decoration: gardenInputStyle,
+      decoration: mindInputStyle,
       keyboardType: TextInputType.emailAddress,
       autofillHints: const [AutofillHints.email],
       validator: gardenEmailValidator,
@@ -208,7 +208,7 @@ class _PasswordFieldWidgetState extends State<_PasswordFieldWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      decoration: gardenInputStyle,
+      decoration: mindInputStyle,
       keyboardType: TextInputType.emailAddress,
       autofillHints: const [AutofillHints.password],
     );

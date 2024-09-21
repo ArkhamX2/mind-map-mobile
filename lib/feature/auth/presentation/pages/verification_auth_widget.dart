@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mind_map/core/constant_values/routes.dart';
-import 'package:mind_map/core/presentation/UI/garden_loading_widget.dart';
+import 'package:mind_map/core/presentation/UI/mind_loading_widget.dart';
 import 'package:mind_map/core/presentation/UI/snack_message.dart';
 import 'package:mind_map/core/presentation/button_widget.dart';
-import 'package:mind_map/core/presentation/garden_input_text_field_style.dart';
-import 'package:mind_map/core/presentation/label/garden_aligned_label_widget.dart';
-import 'package:mind_map/core/presentation/label/garden_colored_label_widget.dart';
-import 'package:mind_map/core/presentation/label/garden_weighted_label_widget.dart';
+import 'package:mind_map/core/presentation/mind_input_text_field_style.dart';
+import 'package:mind_map/core/presentation/label/mind_aligned_label_widget.dart';
+import 'package:mind_map/core/presentation/label/mind_colored_label_widget.dart';
+import 'package:mind_map/core/presentation/label/mind_weighted_label_widget.dart';
 import 'package:mind_map/core/utils/verification_code_validator.dart';
 import 'package:mind_map/feature/auth/data/models/security_request_model.dart';
 import 'package:mind_map/feature/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -81,7 +81,7 @@ class _BodyWidget extends StatelessWidget {
         return Container();
       },
       authLoading: () => const Center(
-        child: GardenLoadingWidget(),
+        child: MindLoadingWidget(),
       ),
       authFail: (message) => VerificationWidet(
         formKey: formKey,
@@ -189,7 +189,7 @@ class _VerificationCodeInputWidget extends StatelessWidget {
       children: [
         TextFormField(
           controller: controller,
-          decoration: gardenInputStyle,
+          decoration: mindInputStyle,
           keyboardType: TextInputType.number,
           autofillHints: const [AutofillHints.oneTimeCode],
           validator: verificationCodeValidator,
@@ -199,7 +199,7 @@ class _VerificationCodeInputWidget extends StatelessWidget {
         ),
         //TODO: Сделать каунтдаун на 2 минуты
 
-        const GardenColoredLabelWidget(
+        const MindColoredLabelWidget(
           text: "Повторно код можно получить через",
           fontSize: 20,
           color: Color.fromARGB(160, 101, 59, 159),
@@ -220,7 +220,7 @@ class _VerificationInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GardenWeightedLabelWidget(
+        MindWeightedLabelWidget(
           text: widget.email,
           fontSize: 20,
           weight: FontWeight.bold,
@@ -228,7 +228,7 @@ class _VerificationInfoWidget extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        const GardenAlignedLabelWidget(
+        const MindAlignedLabelWidget(
           text:
               "На почту был отправлен код из N цифр. Введите в поле ниже код из письма:",
           fontSize: 18,

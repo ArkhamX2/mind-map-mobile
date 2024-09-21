@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/core/presentation/button_widget.dart';
-import 'package:mind_map/core/presentation/garden_input_text_field_style.dart';
-import 'package:mind_map/core/presentation/label/garden_default_label_widget.dart';
+import 'package:mind_map/core/presentation/mind_input_text_field_style.dart';
+import 'package:mind_map/core/presentation/label/mind_default_label_widget.dart';
 import 'package:mind_map/core/utils/email_validator.dart';
 import 'package:mind_map/feature/auth/presentation/pages/verification_auth_widget.dart';
 import 'package:mind_map/feature/auth/presentation/widgets/auth_app_bar_widget.dart';
@@ -57,7 +57,7 @@ class _EmailEnterFormWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const GardenDefaultLabelWidget(
+          const MindDefaultLabelWidget(
             text: "Введите свой email:",
             fontSize: 20,
           ),
@@ -124,7 +124,7 @@ class _EmailFieldWidgetState extends State<_EmailFieldWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      decoration: gardenInputStyle,
+      decoration: mindInputStyle,
       keyboardType: TextInputType.emailAddress,
       autofillHints: const [AutofillHints.email],
       validator: gardenEmailValidator,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final gardenInputStyle = InputDecoration(
+final mindInputStyle = InputDecoration(
   constraints: const BoxConstraints(maxHeight: 40),
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(5),

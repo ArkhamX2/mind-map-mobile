@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class GardenDropdown<T> extends StatefulWidget {
+class MindDropdown<T> extends StatefulWidget {
   final List<T?> items;
   final T? model;
   final Function(T?) callback;
 
-  const GardenDropdown({
+  const MindDropdown({
     super.key,
     required this.items,
     required this.model,
@@ -13,10 +13,10 @@ class GardenDropdown<T> extends StatefulWidget {
   });
 
   @override
-  State<GardenDropdown<T>> createState() => GardenDropdownState<T>();
+  State<MindDropdown<T>> createState() => MindDropdownState<T>();
 }
 
-class GardenDropdownState<T> extends State<GardenDropdown<T>> {
+class MindDropdownState<T> extends State<MindDropdown<T>> {
   T? item;
 
   @override

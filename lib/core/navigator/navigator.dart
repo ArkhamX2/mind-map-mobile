@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mind_map/feature/education/presentation/pages/education_page.dart';
+import 'package:mind_map/feature/profile/presentation/pages/profile_page.dart';
+import 'package:mind_map/feature/projects/presentation/pages/projectsPage.dart';
 
 class MainNavigatorWidget extends StatefulWidget {
   const MainNavigatorWidget({super.key});
@@ -12,8 +15,8 @@ class _MainNavigatorWidgetState extends State<MainNavigatorWidget> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const ProfilePage(),
-    const CoursesPage(),
-    const ProjectPage(),
+    const EducationPage(),
+    const ProjectsPage(),
   ];
 
   void _onItemTap(int index) {
@@ -37,7 +40,7 @@ class _MainNavigatorWidgetState extends State<MainNavigatorWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: "Курсы",
+            label: "Обучение",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),

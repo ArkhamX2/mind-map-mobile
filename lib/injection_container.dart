@@ -20,9 +20,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   const secureStorage = FlutterSecureStorage();
-  Hive.registerAdapter(PlantModelAdapter());
-  Hive.registerAdapter(EventModelAdapter());
-  Hive.registerAdapter(FlowerBedModelAdapter());
+  // Hive.registerAdapter(PlantModelAdapter());
+  // Hive.registerAdapter(EventModelAdapter());
+  // Hive.registerAdapter(FlowerBedModelAdapter());
 
   //! Features
   //! Auth
@@ -84,146 +84,146 @@ Future<void> init() async {
 
   await sl.isReady<AuthLocalDataSource>();
 
-  //! PlantList
-  sl.registerFactory(
-    () => PlantListCubit(
-      loadPlants: sl(),
-      uploadPlant: sl(),
-    ),
-  );
+//   //! PlantList
+//   sl.registerFactory(
+//     () => PlantListCubit(
+//       loadPlants: sl(),
+//       uploadPlant: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton(
-    () => LoadPlants(
-      plantRepository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => UploadPlant(
-      plantRepository: sl(),
-    ),
-  );
+//   sl.registerLazySingleton(
+//     () => LoadPlants(
+//       plantRepository: sl(),
+//     ),
+//   );
+//   sl.registerLazySingleton(
+//     () => UploadPlant(
+//       plantRepository: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton<PlantRepository>(
-    () => PlantRepositoryImpl(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
+//   sl.registerLazySingleton<PlantRepository>(
+//     () => PlantRepositoryImpl(
+//       remoteDataSource: sl(),
+//       localDataSource: sl(),
+//       networkInfo: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton<PlantRemoteDataSource>(
-    () => PlantRemoteDataSource(
-      client: sl(),
-    ),
-  );
+//   sl.registerLazySingleton<PlantRemoteDataSource>(
+//     () => PlantRemoteDataSource(
+//       client: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingletonAsync<PlantLocalDataSource>(() async {
-    return PlantLocalDataSource(
-      plantBox: await Hive.openBox<PlantModel>('PlantBox'),
-    );
-  });
+//   sl.registerLazySingletonAsync<PlantLocalDataSource>(() async {
+//     return PlantLocalDataSource(
+//       plantBox: await Hive.openBox<PlantModel>('PlantBox'),
+//     );
+//   });
 
-  await sl.isReady<PlantLocalDataSource>();
+//   await sl.isReady<PlantLocalDataSource>();
 
-  //! Events
-  sl.registerFactory(
-    () => EventCubit(
-      loadEvents: sl(),
-      uploadEvent: sl(),
-    ),
-  );
+//   //! Events
+//   sl.registerFactory(
+//     () => EventCubit(
+//       loadEvents: sl(),
+//       uploadEvent: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton(
-    () => LoadEvents(
-      eventRepository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => UploadEvent(
-      eventRepository: sl(),
-    ),
-  );
+//   sl.registerLazySingleton(
+//     () => LoadEvents(
+//       eventRepository: sl(),
+//     ),
+//   );
+//   sl.registerLazySingleton(
+//     () => UploadEvent(
+//       eventRepository: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton<EventRepository>(
-    () => EventRepositoryImpl(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
+//   sl.registerLazySingleton<EventRepository>(
+//     () => EventRepositoryImpl(
+//       remoteDataSource: sl(),
+//       localDataSource: sl(),
+//       networkInfo: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton<EventRemoteDataSource>(
-    () => EventRemoteDataSource(
-      client: sl(),
-    ),
-  );
+//   sl.registerLazySingleton<EventRemoteDataSource>(
+//     () => EventRemoteDataSource(
+//       client: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingletonAsync<EventLocalDataSource>(() async {
-    return EventLocalDataSource(
-      eventBox: await Hive.openBox<EventModel>('EventBox'),
-    );
-  });
+//   sl.registerLazySingletonAsync<EventLocalDataSource>(() async {
+//     return EventLocalDataSource(
+//       eventBox: await Hive.openBox<EventModel>('EventBox'),
+//     );
+//   });
 
-  await sl.isReady<EventLocalDataSource>();
+//   await sl.isReady<EventLocalDataSource>();
 
-//! FlowerBeds
-  sl.registerFactory(
-    () => FlowerBedCubit(
-      removeFlowerBed: sl(),
-      loadFlowerBeds: sl(),
-      uploadFlowerBed: sl(),
-    ),
-  );
+// //! FlowerBeds
+//   sl.registerFactory(
+//     () => FlowerBedCubit(
+//       removeFlowerBed: sl(),
+//       loadFlowerBeds: sl(),
+//       uploadFlowerBed: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton(
-    () => LoadFlowerBeds(
-      flowerBedRepository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => UploadFlowerBed(
-      flowerBedRepository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => RemoveFlowerBed(
-      flowerBedRepository: sl(),
-    ),
-  );
+//   sl.registerLazySingleton(
+//     () => LoadFlowerBeds(
+//       flowerBedRepository: sl(),
+//     ),
+//   );
+//   sl.registerLazySingleton(
+//     () => UploadFlowerBed(
+//       flowerBedRepository: sl(),
+//     ),
+//   );
+//   sl.registerLazySingleton(
+//     () => RemoveFlowerBed(
+//       flowerBedRepository: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton<FlowerBedRepository>(
-    () => FlowerBedRepositoryImpl(
-      localDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
+//   sl.registerLazySingleton<FlowerBedRepository>(
+//     () => FlowerBedRepositoryImpl(
+//       localDataSource: sl(),
+//       networkInfo: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingletonAsync<FlowerBedLocalDataSource>(() async {
-    return FlowerBedLocalDataSource(
-      flowerBedBox: await Hive.openBox<FlowerBedModel>('FlowerBedBox'),
-    );
-  });
+//   sl.registerLazySingletonAsync<FlowerBedLocalDataSource>(() async {
+//     return FlowerBedLocalDataSource(
+//       flowerBedBox: await Hive.openBox<FlowerBedModel>('FlowerBedBox'),
+//     );
+//   });
 
-  await sl.isReady<FlowerBedLocalDataSource>();
+//   await sl.isReady<FlowerBedLocalDataSource>();
 
-  //! PlantCard
-  sl.registerFactory(
-    () => PlantCardCubit(
-      loadPlant: sl(),
-      loadPlantEvents: sl(),
-    ),
-  );
+//   //! PlantCard
+//   sl.registerFactory(
+//     () => PlantCardCubit(
+//       loadPlant: sl(),
+//       loadPlantEvents: sl(),
+//     ),
+//   );
 
-  sl.registerLazySingleton(
-    () => LoadPlant(
-      plantRepository: sl(),
-    ),
-  );
-  sl.registerLazySingleton(
-    () => LoadPlantEvents(
-      eventRepository: sl(),
-    ),
-  );
+//   sl.registerLazySingleton(
+//     () => LoadPlant(
+//       plantRepository: sl(),
+//     ),
+//   );
+//   sl.registerLazySingleton(
+//     () => LoadPlantEvents(
+//       eventRepository: sl(),
+//     ),
+//   );
 
 //! Core
 

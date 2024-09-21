@@ -1,26 +1,23 @@
 // ignore_for_file: overridden_fields
 
 import 'package:flutter/material.dart';
-import 'package:mind_map/core/presentation/label/garden_label_widget.dart';
+import 'package:mind_map/core/presentation/label/mind_label_widget.dart';
+import 'package:mind_map/resources/colors.dart';
 
-class GardenColoredLabelWidget extends GardenLabelWidget {
+class MindDefaultLabelWidget extends MindLabelWidget {
   @override
   final String text;
 
   @override
   final double fontSize;
 
-  @override
-  final Color color;
-
-  const GardenColoredLabelWidget({
+  const MindDefaultLabelWidget({super.key, 
     required this.text,
     required this.fontSize,
-    required this.color,
   }) : super(
           text: text,
           align: TextAlign.start,
-          color: color,
+          color: mainForegroundColor,
           fontSize: fontSize,
           weight: FontWeight.normal,
         );

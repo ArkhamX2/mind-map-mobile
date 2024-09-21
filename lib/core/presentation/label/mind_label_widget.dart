@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-abstract class GardenLabelWidget extends StatelessWidget {
+abstract class MindLabelWidget extends StatelessWidget {
   final String text;
   final double fontSize;
   final FontWeight weight;
   final TextAlign align;
   final Color color;
 
-  const GardenLabelWidget({
+  const MindLabelWidget({
     super.key,
     required this.text,
     required this.fontSize,
