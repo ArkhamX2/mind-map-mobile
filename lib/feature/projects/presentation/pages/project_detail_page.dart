@@ -106,7 +106,7 @@ class ProjectDetailPage extends StatelessWidget {
                           fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
-                      height: project.comments.length == 0 ? 0 : 200,
+                      height: project.comments.isEmpty ? 0 : 200,
                       child: Scrollbar(
                         radius: const Radius.circular(5),
                         interactive: true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/feature/education/presentation/widgets/tile_tag_widget.dart';
+import 'package:mind_map/feature/projects/presentation/pages/add_project_page.dart';
 import 'package:mind_map/feature/projects/presentation/widgets/project_tile_widget.dart';
 
 class ProjectsPage extends StatefulWidget {
@@ -111,87 +112,105 @@ class _ProjectsPageState extends State<ProjectsPage> {
     final List<Project> displayedProjects =
         _showMyProjects ? myProjects : otherProjects;
 
-    return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Color.fromARGB(255, 205, 207, 255),
-          Colors.white, // starting color
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 40,
-          ),
-          ToggleButtons(
-            isSelected: [_showMyProjects, !_showMyProjects],
-            onPressed: (int index) {
-              setState(() {
-                _showMyProjects = index == 0;
-              });
-            },
-            children: const <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('Мои проекты'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('Чужие проекты'),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                const Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Поиск...',
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(color: Color(0xFF8787C7))),
-                      fillColor: Colors.white,
-                      filled: true,
-                    ),
-                  ),
+    return Scaffold(
+      floatingActionButton: _showMyProjects
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddProjectPage()),
+                );
+              },
+              tooltip: 'Добавить',
+              child: const Icon(Icons.add),
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 205, 207, 255),
+            Colors.white, // starting color
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        )),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 40,
+            ),
+            ToggleButtons(
+              isSelected: [_showMyProjects, !_showMyProjects],
+              onPressed: (int index) {
+                setState(() {
+                  _showMyProjects = index == 0;
+                });
+              },
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              color: const Color(0xFF06146C),
+              fillColor: Colors.white,
+              children: const <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Мои проекты'),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: _filterDialog,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Чужие проекты'),
                 ),
               ],
             ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: selectedTags
-                  .map((tag) => TileTagItemWidget(tag: tag))
-                  .toList(),
+            const SizedBox(
+              height: 10,
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: displayedProjects.length,
-              itemBuilder: (context, index) {
-                final project = displayedProjects[index];
-                return ProjectTileWidget(project: project);
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Поиск...',
+                        suffixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(color: Color(0xFF8787C7))),
+                        fillColor: Colors.white,
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.filter_list),
+                    onPressed: _filterDialog,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: selectedTags
+                    .map((tag) => TileTagItemWidget(tag: tag))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: displayedProjects.length,
+                itemBuilder: (context, index) {
+                  final project = displayedProjects[index];
+                  return ProjectTileWidget(project: project);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
