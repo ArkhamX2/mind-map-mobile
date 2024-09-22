@@ -75,7 +75,6 @@ class ProjectDetailPage extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        
                         Expanded(
                           child: MindButton(
                               title: 'Просмотр',
@@ -107,7 +106,7 @@ class ProjectDetailPage extends StatelessWidget {
                           fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
-                      height: 300,
+                      height: project.comments.length == 0 ? 0 : 200,
                       child: Scrollbar(
                         radius: const Radius.circular(5),
                         interactive: true,

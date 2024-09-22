@@ -40,7 +40,7 @@ class UserTagListWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 300,
+          height: 5*60 > 300 ? 300: 5*60,
           child: Scrollbar(
             radius: const Radius.circular(5),
             interactive: true,
