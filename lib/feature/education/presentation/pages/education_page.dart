@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/core/presentation/button_widget.dart';
 import 'package:mind_map/feature/education/presentation/pages/tile_details_page.dart';
-import 'package:mind_map/feature/education/presentation/widgets/tile_tag_widget.dart';
+import 'package:mind_map/feature/education/presentation/widgets/tag_item_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EducationPage extends StatefulWidget {

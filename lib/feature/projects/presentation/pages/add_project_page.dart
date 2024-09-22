@@ -13,7 +13,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
-  final List<String> _tags = [];
+  List<String> _tags = [];
 
   final List<String> allTags = ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4'];
 
@@ -68,6 +68,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
         );
       },
     );
+    
+    if (selected != null) {
+      setState(() {
+        _tags = selected;
+      });
+    }
   }
 
   @override

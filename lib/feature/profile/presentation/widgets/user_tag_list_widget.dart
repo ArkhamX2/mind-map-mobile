@@ -3,8 +3,63 @@ import 'package:mind_map/core/presentation/button_widget.dart';
 import 'package:mind_map/feature/profile/presentation/pages/knowledge_graph_screen.dart';
 import 'package:mind_map/feature/profile/presentation/widgets/user_tag_widget.dart';
 
-class UserTagListWidget extends StatelessWidget {
+class UserTagListWidget extends StatefulWidget {
   const UserTagListWidget({Key? key}) : super(key: key);
+
+  @override
+  State<UserTagListWidget> createState() => _UserTagListWidgetState();
+}
+
+class _UserTagListWidgetState extends State<UserTagListWidget> {
+  List<String> _tags = [];
+  final List<String> allTags = ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4'];
+
+  void _filterDialog() async {
+    final List<String>? selected = await showDialog<List<String>>(
+      context: context,
+      builder: (context) {
+        List<String> tempSelectedTags = List.from(_tags);
+        return AlertDialog(
+          title: const Text('Выберите теги'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: allTags.map((tag) {
+                return CheckboxListTile(
+                  title: Text(tag),
+                  value: tempSelectedTags.contains(tag),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      if (value == true) {
+                        _tags.add(tag);
+                      } else {
+                        _tags.remove(tag);
+                      }
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Отмена'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: const Text('Применить'),
+              onPressed: () => Navigator.of(context).pop(tempSelectedTags),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (selected != null) {
+      setState(() {
+        _tags = selected;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +95,7 @@ class UserTagListWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 5*60 > 300 ? 300: 5*60,
+          height: 5 * 60 > 300 ? 300 : 5 * 60,
           child: Scrollbar(
             radius: const Radius.circular(5),
             interactive: true,
@@ -60,7 +115,7 @@ class UserTagListWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        MindButton(title: 'ДОБАВИТЬ', event: () {}),
+        MindButton(title: 'ДОБАВИТЬ', event: _filterDialog),
       ],
     );
   }

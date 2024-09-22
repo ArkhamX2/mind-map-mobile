@@ -3,8 +3,7 @@ import 'package:mind_map/core/presentation/button_widget.dart';
 import 'package:mind_map/core/presentation/mind_input_text_field_style.dart';
 import 'package:mind_map/core/presentation/label/mind_default_label_widget.dart';
 import 'package:mind_map/core/utils/email_validator.dart';
-import 'package:mind_map/feature/auth/presentation/pages/verification_auth_widget.dart';
-import 'package:mind_map/feature/auth/presentation/widgets/auth_app_bar_widget.dart';
+import 'package:mind_map/feature/profile/presentation/pages/profile_page.dart';
 import 'package:mind_map/resources/colors.dart';
 
 class EmailAuthPage extends StatefulWidget {
@@ -28,12 +27,18 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainBackgroundColor,
-      appBar: const AuthAppBarWidget(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 17),
-        child: _EmailEnterFormWidget(
-          formKey: formKey,
-          emailTextController: _emailTextController,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            _EmailEnterFormWidget(
+              formKey: formKey,
+              emailTextController: _emailTextController,
+            ),
+          ],
         ),
       ),
     );
@@ -78,7 +83,7 @@ class _EmailEnterFormWidget extends StatelessWidget {
                   final email = _emailTextController.text;
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (context) => VerificationAuthPage(email: email),
+                      builder: (context) => const ProfilePage(),
                     ),
                   );
                 }

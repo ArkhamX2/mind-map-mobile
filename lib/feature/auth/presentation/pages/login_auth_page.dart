@@ -7,7 +7,6 @@ import 'package:mind_map/core/presentation/label/mind_default_label_widget.dart'
 import 'package:mind_map/core/utils/email_validator.dart';
 import 'package:mind_map/feature/auth/data/models/security_request_model.dart';
 import 'package:mind_map/feature/auth/presentation/bloc/bloc/auth_bloc.dart';
-import 'package:mind_map/feature/auth/presentation/widgets/auth_app_bar_widget.dart';
 import 'package:mind_map/resources/colors.dart';
 
 class LoginAuthPage extends StatefulWidget {
@@ -35,29 +34,35 @@ class _LoginAuthPageState extends State<LoginAuthPage> {
     final authBloc = context.watch<AuthBloc>();
     return Scaffold(
       backgroundColor: mainBackgroundColor,
-      appBar: const AuthAppBarWidget(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 17),
-        child: authBloc.state.when(
-          initial: () => _FormWidget(
-            formKey: formKey,
-            emailTextController: emailTextController,
-            passwordTextController: passwordTextController,
-          ),
-          authSuccess: (success) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pushReplacementNamed(widget.route);
-            });
-            return Container(); // Return an empty container to avoid return null.
-          },
-          authLoading: () => const Center(
-            child: MindLoadingWidget(),
-          ),
-          authFail: (message) => _FormWidget(
-            formKey: formKey,
-            emailTextController: emailTextController,
-            passwordTextController: passwordTextController,
-          ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            authBloc.state.when(
+              initial: () => _FormWidget(
+                formKey: formKey,
+                emailTextController: emailTextController,
+                passwordTextController: passwordTextController,
+              ),
+              authSuccess: (success) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushReplacementNamed(widget.route);
+                });
+                return Container(); // Return an empty container to avoid return null.
+              },
+              authLoading: () => const Center(
+                child: MindLoadingWidget(),
+              ),
+              authFail: (message) => _FormWidget(
+                formKey: formKey,
+                emailTextController: emailTextController,
+                passwordTextController: passwordTextController,
+              ),
+            ),
+          ],
         ),
       ),
     );

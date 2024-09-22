@@ -7,7 +7,7 @@ import 'package:mind_map/core/navigator/navigator.dart';
 import 'package:mind_map/core/presentation/UI/mind_loading_widget.dart';
 import 'package:mind_map/feature/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:mind_map/feature/auth/presentation/bloc/cubit/token_cubit.dart';
-import 'package:mind_map/feature/auth/presentation/pages/main_auth_widget.dart';
+import 'package:mind_map/feature/auth/presentation/pages/login_auth_page.dart';
 import 'package:mind_map/feature/education/presentation/pages/education_page.dart';
 import 'package:mind_map/feature/profile/presentation/pages/profile_page.dart';
 import 'package:mind_map/feature/projects/presentation/pages/projects_page.dart';
@@ -33,22 +33,22 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<AuthBloc>()),
       ],
       child: MaterialApp(
-          title: 'Мой сад',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color.fromARGB(255, 101, 59, 159),
-            ),
-            fontFamily: 'Inter',
+        title: 'Мой сад',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(255, 101, 59, 159),
           ),
-          home: const _SplashScreen(),
-          routes: {
-            mainRoute: (context) => const MainNavigatorWidget(),
-            authRoute: (context) => const MainAuthPage(),
-            profileRoute: (context) => const ProfilePage(),
-            coursesRoute: (context) => const EducationPage(),
-            projectsRoute: (context) => const ProjectsPage(),
-          },
+          fontFamily: 'Inter',
+        ),
+        home: const _SplashScreen(),
+        routes: {
+          mainRoute: (context) => const MainNavigatorWidget(),
+          authRoute: (context) => const LoginAuthPage(route: profileRoute),
+          profileRoute: (context) => const ProfilePage(),
+          coursesRoute: (context) => const EducationPage(),
+          projectsRoute: (context) => const ProjectsPage(),
+        },
       ),
     );
   }
@@ -99,7 +99,7 @@ class _InitializerState extends State<Initializer> {
   @override
   Widget build(BuildContext context) {
     return const MainNavigatorWidget();
-    //auth 
+    //auth
     // final tokenCubit = context.watch<TokenCubit>();
     // return tokenCubit.state.when(
     //   initial: () => const Center(child: GardenLoadingWidget()),
