@@ -11,56 +11,61 @@ class UserTagListWidget extends StatefulWidget {
 }
 
 class _UserTagListWidgetState extends State<UserTagListWidget> {
-  List<String> _tags = [];
+  List<String> selectedTags = [];
   final List<String> allTags = ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4'];
+void _filterDialog() async {
+  // Создаем ValueNotifier для выбранных тегов
+  final ValueNotifier<List<String>> selectedTagsNotifier = ValueNotifier<List<String>>(List.from(selectedTags));
 
-  void _filterDialog() async {
-    final List<String>? selected = await showDialog<List<String>>(
-      context: context,
-      builder: (context) {
-        List<String> tempSelectedTags = List.from(_tags);
-        return AlertDialog(
-          title: const Text('Выберите теги'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: allTags.map((tag) {
-                return CheckboxListTile(
-                  title: Text(tag),
-                  value: tempSelectedTags.contains(tag),
-                  onChanged: (bool? value) {
-                    setState(() {
+  final List<String>? selected = await showDialog<List<String>>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Выберите теги'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: allTags.map((tag) {
+              return ValueListenableBuilder<List<String>>(
+                valueListenable: selectedTagsNotifier,
+                builder: (context, selectedTags, child) {
+                  return CheckboxListTile(
+                    title: Text(tag),
+                    value: selectedTags.contains(tag),
+                    onChanged: (bool? value) {
                       if (value == true) {
-                        _tags.add(tag);
+                        selectedTagsNotifier.value.add(tag);
                       } else {
-                        _tags.remove(tag);
+                        selectedTagsNotifier.value.remove(tag);
                       }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
+                      // Обновляем состояние чтобы отобразить изменения
+                      selectedTagsNotifier.notifyListeners();
+                    },
+                  );
+                },
+              );
+            }).toList(),
           ),
-          actions: [
-            TextButton(
-              child: const Text('Отмена'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            TextButton(
-              child: const Text('Применить'),
-              onPressed: () => Navigator.of(context).pop(tempSelectedTags),
-            ),
-          ],
-        );
-      },
-    );
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Отмена'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          TextButton(
+            child: const Text('Применить'),
+            onPressed: () => Navigator.of(context).pop(selectedTagsNotifier.value),
+          ),
+        ],
+      );
+    },
+  );
 
-    if (selected != null) {
-      setState(() {
-        _tags = selected;
-      });
-    }
+  if (selected != null) {
+    setState(() {
+      selectedTags = selected;
+    });
   }
-
+}
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -95,22 +100,22 @@ class _UserTagListWidgetState extends State<UserTagListWidget> {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 5 * 60 > 300 ? 300 : 5 * 60,
+          height: selectedTags.length * 60 > 300 ? 300 : selectedTags.length * 60,
           child: Scrollbar(
             radius: const Radius.circular(5),
             interactive: true,
             child: ListView(
               scrollDirection: Axis.vertical,
-              children: List.generate(10, (index) {
+              children: selectedTags.map((tag) {
                 return Column(
                   children: [
-                    UserTagWidget(title: 'Тег $index', level: 'Уровень $index'),
+                    UserTagWidget(title: tag, level: 'Уровень 2'),
                     const SizedBox(
                       height: 5,
                     )
                   ],
                 );
-              }),
+              }).toList(),
             ),
           ),
         ),

@@ -59,53 +59,59 @@ class _ProjectsPageState extends State<ProjectsPage> {
     ]),
     // Добавьте больше курсов по мере необходимости
   ];
+void _filterDialog() async {
+  // Создаем ValueNotifier для выбранных тегов
+  final ValueNotifier<List<String>> selectedTagsNotifier = ValueNotifier<List<String>>(List.from(selectedTags));
 
-  void _filterDialog() async {
-    final List<String>? selected = await showDialog<List<String>>(
-      context: context,
-      builder: (context) {
-        List<String> tempSelectedTags = List.from(selectedTags);
-        return AlertDialog(
-          title: const Text('Выберите теги'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: allTags.map((tag) {
-                return CheckboxListTile(
-                  title: Text(tag),
-                  value: tempSelectedTags.contains(tag),
-                  onChanged: (bool? value) {
-                    setState(() {
+  final List<String>? selected = await showDialog<List<String>>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Выберите теги'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: allTags.map((tag) {
+              return ValueListenableBuilder<List<String>>(
+                valueListenable: selectedTagsNotifier,
+                builder: (context, selectedTags, child) {
+                  return CheckboxListTile(
+                    title: Text(tag),
+                    value: selectedTags.contains(tag),
+                    onChanged: (bool? value) {
                       if (value == true) {
-                        tempSelectedTags.add(tag);
+                        selectedTagsNotifier.value.add(tag);
                       } else {
-                        tempSelectedTags.remove(tag);
+                        selectedTagsNotifier.value.remove(tag);
                       }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
+                      // Обновляем состояние чтобы отобразить изменения
+                      selectedTagsNotifier.notifyListeners();
+                    },
+                  );
+                },
+              );
+            }).toList(),
           ),
-          actions: [
-            TextButton(
-              child: const Text('Отмена'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            TextButton(
-              child: const Text('Применить'),
-              onPressed: () => Navigator.of(context).pop(tempSelectedTags),
-            ),
-          ],
-        );
-      },
-    );
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Отмена'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          TextButton(
+            child: const Text('Применить'),
+            onPressed: () => Navigator.of(context).pop(selectedTagsNotifier.value),
+          ),
+        ],
+      );
+    },
+  );
 
-    if (selected != null) {
-      setState(() {
-        selectedTags = selected;
-      });
-    }
+  if (selected != null) {
+    setState(() {
+      selectedTags = selected;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {

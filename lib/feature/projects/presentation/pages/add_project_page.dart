@@ -13,68 +13,74 @@ class _AddProjectPageState extends State<AddProjectPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
-  List<String> _tags = [];
+  List<String> selectedTags = [];
 
   final List<String> allTags = ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4'];
 
   void _removeTag(int index) {
     setState(() {
-      _tags.removeAt(index);
+      selectedTags.removeAt(index);
     });
   }
 
   void _save() {
     // Логика сохранения элемента
     print(
-        'Сохранено: ${_titleController.text}, ${_descriptionController.text}, ${_linkController.text}, Теги: $_tags');
+        'Сохранено: ${_titleController.text}, ${_descriptionController.text}, ${_linkController.text}, Теги: $selectedTags');
   }
+void _filterDialog() async {
+  // Создаем ValueNotifier для выбранных тегов
+  final ValueNotifier<List<String>> selectedTagsNotifier = ValueNotifier<List<String>>(List.from(selectedTags));
 
-  void _filterDialog() async {
-    final List<String>? selected = await showDialog<List<String>>(
-      context: context,
-      builder: (context) {
-        List<String> tempSelectedTags = List.from(_tags);
-        return AlertDialog(
-          title: const Text('Выберите теги'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: allTags.map((tag) {
-                return CheckboxListTile(
-                  title: Text(tag),
-                  value: tempSelectedTags.contains(tag),
-                  onChanged: (bool? value) {
-                    setState(() {
+  final List<String>? selected = await showDialog<List<String>>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Выберите теги'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: allTags.map((tag) {
+              return ValueListenableBuilder<List<String>>(
+                valueListenable: selectedTagsNotifier,
+                builder: (context, selectedTags, child) {
+                  return CheckboxListTile(
+                    title: Text(tag),
+                    value: selectedTags.contains(tag),
+                    onChanged: (bool? value) {
                       if (value == true) {
-                        _tags.add(tag);
+                        selectedTagsNotifier.value.add(tag);
                       } else {
-                        _tags.remove(tag);
+                        selectedTagsNotifier.value.remove(tag);
                       }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
+                      // Обновляем состояние чтобы отобразить изменения
+                      selectedTagsNotifier.notifyListeners();
+                    },
+                  );
+                },
+              );
+            }).toList(),
           ),
-          actions: [
-            TextButton(
-              child: const Text('Отмена'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            TextButton(
-              child: const Text('Применить'),
-              onPressed: () => Navigator.of(context).pop(tempSelectedTags),
-            ),
-          ],
-        );
-      },
-    );
-    
-    if (selected != null) {
-      setState(() {
-        _tags = selected;
-      });
-    }
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Отмена'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          TextButton(
+            child: const Text('Применить'),
+            onPressed: () => Navigator.of(context).pop(selectedTagsNotifier.value),
+          ),
+        ],
+      );
+    },
+  );
+
+  if (selected != null) {
+    setState(() {
+      selectedTags = selected;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +162,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: _tags.map((tag) {
-                                int index = _tags.indexOf(tag);
+                              children: selectedTags.map((tag) {
+                                int index = selectedTags.indexOf(tag);
                                 return Container(
                                   margin: const EdgeInsets.only(right: 8.0),
                                   child: Row(
