@@ -1,28 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/core/presentation/button_widget.dart';
-import 'package:mind_map/feature/education/presentation/pages/tile_details_page.dart';
 import 'package:mind_map/feature/education/presentation/widgets/tile_tag_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mind_map/feature/projects/presentation/widgets/project_tile_widget.dart';
 
-class EducationPage extends StatefulWidget {
-  const EducationPage({Key? key}) : super(key: key);
+class ProjectsPage extends StatefulWidget {
+  const ProjectsPage({Key? key}) : super(key: key);
 
   @override
-  _EducationPageState createState() => _EducationPageState();
+  _ProjectsPageState createState() => _ProjectsPageState();
 }
 
-class _EducationPageState extends State<EducationPage> {
+class _ProjectsPageState extends State<ProjectsPage> {
   List<String> selectedTags = [];
   final List<String> allTags = ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4'];
-  final List<Course> courses = [
-    Course(
+
+  final List<Project> otherProjects = [
+    Project('Чужой проект 1', 'https://example.com/other_project1',
+        'Описание чужого проекта 1', 'https://via.placeholder.com/150', [
+      'Тег 2',
+      'Тег 3',
+    ], []),
+    Project('Чужой проект 2', 'https://example.com/other_project2',
+        'Описание чужого проекта 2', 'https://via.placeholder.com/150', [
+      'Тег 2',
+      'Тег 4',
+    ], []),
+  ];
+
+  bool _showMyProjects = true;
+
+  final List<Project> myProjects = [
+    Project(
         'Супер-курсы по вторжению в Африку и покорению Питона. Подойдет для тех, кто ничего ',
         'https://example.com/course1',
         'Описание курса 1',
-        'https://via.placeholder.com/150',
-        ['Тег 1', 'Тег 2', 'Тег 3', 'Тег 4']),
-    Course('Курс 2', 'https://example.com/course2', 'Описание курса 2',
-        'https://via.placeholder.com/150', ['Тег 1', 'Тег 2']),
+        'https://via.placeholder.com/150', [
+      'Тег 1',
+      'Тег 2',
+      'Тег 3',
+      'Тег 4'
+    ], [
+      Comment("Мявка0", "Крутой проект, но не хватает котов в оформлении :("),
+      Comment("Мявка1", "Крутой проект, но не хватает котов в оформлении :("),
+      Comment("Мявка2",
+          "Крутой проект, но не хватает котов в оформлении :( мямуяммумямумяумуммуямумяумямумямумяумяуямуммямуммяуммямуммяуммумямуммяу"),
+      Comment("Мявка3", "Крутой проект, но не хватает котов в оформлении :(")
+    ]),
+    Project('Курс 2', 'https://example.com/course2', 'Описание курса 2',
+        'https://via.placeholder.com/150', [
+      'Тег 1',
+      'Тег 2'
+    ], [
+      Comment("Мявка0", "Крутой проект, но не хватает котов в оформлении :("),
+      Comment("Мявка1", "Крутой проект, но не хватает котов в оформлении :("),
+      Comment("Мявка2",
+          "Крутой проект, но не хватает котов в оформлении :( мямуяммумямумяумуммуямумяумямумямумяумяуямуммямуммяуммямуммяуммумямуммяу"),
+      Comment("Мявка3", "Крутой проект, но не хватает котов в оформлении :(")
+    ]),
     // Добавьте больше курсов по мере необходимости
   ];
 
@@ -73,16 +106,11 @@ class _EducationPageState extends State<EducationPage> {
     }
   }
 
-  void _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final List<Project> displayedProjects =
+        _showMyProjects ? myProjects : otherProjects;
+
     return Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -97,6 +125,27 @@ class _EducationPageState extends State<EducationPage> {
         children: [
           const SizedBox(
             height: 40,
+          ),
+          ToggleButtons(
+            isSelected: [_showMyProjects, !_showMyProjects],
+            onPressed: (int index) {
+              setState(() {
+                _showMyProjects = index == 0;
+              });
+            },
+            children: const <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text('Мои проекты'),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text('Чужие проекты'),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -125,8 +174,9 @@ class _EducationPageState extends State<EducationPage> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children:
-                  selectedTags.map((tag) => TileTagItemWidget(tag: tag)).toList(),
+              children: selectedTags
+                  .map((tag) => TileTagItemWidget(tag: tag))
+                  .toList(),
             ),
           ),
           const SizedBox(
@@ -134,10 +184,10 @@ class _EducationPageState extends State<EducationPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: courses.length,
+              itemCount: displayedProjects.length,
               itemBuilder: (context, index) {
-                final course = courses[index];
-                return EducationTileWidget(course: course);
+                final project = displayedProjects[index];
+                return ProjectTileWidget(project: project);
               },
             ),
           ),
@@ -147,74 +197,21 @@ class _EducationPageState extends State<EducationPage> {
   }
 }
 
-class EducationTileWidget extends StatelessWidget {
-  const EducationTileWidget({
-    super.key,
-    required this.course,
-  });
-
-  final Course course;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(10.0),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ClipRRect(
-                borderRadius:
-                    const BorderRadius.all(Radius.circular(10)),
-                child: ConstrainedBox(
-                    constraints:
-                        const BoxConstraints(maxHeight: 200),
-                    child: Image.network(course.imageUrl,
-                        width: double.infinity,
-                        fit: BoxFit.fitWidth))),
-            Text(
-              course.title,
-              style: const TextStyle(
-                  color: Color(0xFF06146C),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-                children: course.tags
-                    .map((tag) => TileTagItemWidget(tag: tag))
-                    .toList()),
-            const SizedBox(
-              height: 10,
-            ),
-            MindButton(
-              title: "Подробнее",
-              event: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        TileDetailPage(course: course),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Course {
+class Project {
   final String title;
   final String link;
   final String description;
   final String imageUrl;
   final List<String> tags;
+  final List<Comment> comments;
 
-  Course(this.title, this.link, this.description, this.imageUrl, this.tags);
+  Project(this.title, this.link, this.description, this.imageUrl, this.tags,
+      this.comments);
+}
+
+class Comment {
+  final String author;
+  final String text;
+
+  Comment(this.author, this.text);
 }

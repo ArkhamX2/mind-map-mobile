@@ -35,7 +35,7 @@ class _BodyWidget extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          GardenButton(
+          MindButton(
             title: "Войти",
             event: () {
               Navigator.of(context).push(

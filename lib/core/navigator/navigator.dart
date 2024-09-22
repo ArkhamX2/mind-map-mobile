@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/feature/education/presentation/pages/education_page.dart';
 import 'package:mind_map/feature/profile/presentation/pages/profile_page.dart';
-import 'package:mind_map/feature/projects/presentation/pages/projectsPage.dart';
+import 'package:mind_map/feature/projects/presentation/pages/projects_page.dart';
 
 class MainNavigatorWidget extends StatefulWidget {
   const MainNavigatorWidget({super.key});

@@ -106,7 +106,7 @@ class _FormWidget extends StatelessWidget {
             height: 23,
           ),
           Center(
-            child: GardenButton(
+            child: MindButton(
               title: "Подтвердить",
               event: () {
                 //TODO: Get the code

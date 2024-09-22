@@ -10,7 +10,7 @@ import 'package:mind_map/feature/auth/presentation/bloc/cubit/token_cubit.dart';
 import 'package:mind_map/feature/auth/presentation/pages/main_auth_widget.dart';
 import 'package:mind_map/feature/education/presentation/pages/education_page.dart';
 import 'package:mind_map/feature/profile/presentation/pages/profile_page.dart';
-import 'package:mind_map/feature/projects/presentation/pages/projectsPage.dart';
+import 'package:mind_map/feature/projects/presentation/pages/projects_page.dart';
 import './injection_container.dart' as di;
 import './injection_container.dart';
 

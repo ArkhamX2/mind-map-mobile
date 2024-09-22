@@ -144,7 +144,7 @@ class _ButtonContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GardenButton(
+        MindButton(
           title: "Получить код повторно",
           event: () {
             //Повторный запрос с емейлом
@@ -153,7 +153,7 @@ class _ButtonContainerWidget extends StatelessWidget {
         const SizedBox(
           height: 17,
         ),
-        GardenButton(
+        MindButton(
           title: "Подтвердить",
           event: () {
             final form = formKey.currentState!;
